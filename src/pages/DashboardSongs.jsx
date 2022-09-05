@@ -1,32 +1,70 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import {NavLink} from 'react-router-dom'
+import {IoAdd,IoPause,IoPlay,IoTrash} from 'react-icons/io5'
+import {AiOutlineClear} from "react-icons/ai";
+import { useStateValue } from '../Context/stateProvider';
+import { getAllSongs } from '../api';
+import { actionType } from '../Context/reducer';
+import Songcard from './Songcard';
+
+
 
 const DashboardSongs = () => {
+  const [songfilter, setsongfilter] = useState('');
+  const [isfocus, setisfocus] = useState(false);
+  const [{allSongs }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    if (!allSongs) {
+      getAllSongs().then(data=>{
+        dispatch({
+          type: actionType.SET_ALLSONGS,
+          allSongs: data,
+         })
+      })
+    }
+  }, [])
+  
   return (
-    <div>DashboardSongs</div>
+    <div className='w-full p-4 flex items-center justify-center flex-col'>
+      <div className='w-full flex items-center justify-center gap-20'>
+      <NavLink to={'/dashboard/newSong'} className="flex items-center justify-center px-4 py-3 border rounded-md border-gray-300 hover:border-gray-500 hover:shadow-md cursor-pointer">
+      <IoAdd/>
+      </NavLink>
+      <input 
+      className={`w-52 px-4 py-2 border ${isfocus? " border-gray-500 shadow-md" : "border-gray-300"} rounded-md bg-transparent outline-none duration-500 transition-all ease-in-out text-base text-textColor font-semibold`}
+      type='text' placeholder='search here ...' value={songfilter} 
+      onChange={(e)=>setsongfilter(e.target.value)}
+      onBlur={()=>setisfocus(false)}
+      onFocus={()=>setisfocus(true)}
+      />
+      <AiOutlineClear className=' text-3xl text-textColor cursor-pointer'/>
+      </div>
+  {/*Main Container*/}
+      <div className='relative w-full my-4 p-4 border border-gray-300 rounded-md'>
+      {/*count*/}
+      <div className='absolute top-4 left-4 '>
+      <p className='text-xl font-bold'>
+      <span className='text-sm font-semibold text-textColor'>Count : {""} </span>
+      {allSongs?.length}
+      </p>
+      </div>
+      {/*Song container*/}   
+      <Songcontainer data={allSongs}/> 
+      </div>
+    </div>
+  )
+}
+
+export const Songcontainer=({data})=>{
+  return(
+    <div className='w-full flex flex-wrap gap-3 items-center justify-evenly'>
+         {data && data.map((song,idx)=>(
+          <Songcard key={song._id} data={song} index={idx}/>
+         ))}
+    </div>
   )
 }
 
 export default DashboardSongs
 
-// {allUsers && allUsers?.map((data,idx)=>(
-//   <div className='w-full min-w-[750px] flex items-center justify-between' key={idx}>
-//   <p className='text-sm font-semibold text-textColor w-275 min-w-[160px] text-center'><img src={data.imageUrl} alt=''/></p>
-//   <p className='text-sm font-semibold text-textColor w-275 min-w-[160px] text-center'>{data.name}</p>
-//   <p className='text-sm font-semibold text-textColor w-275 min-w-[160px] text-center'>{data.email}</p>
-//   <p className='text-sm font-semibold text-textColor w-275 min-w-[160px] text-center'>{data.emailVerified}</p>
-//   <p className='text-sm font-semibold text-textColor w-275 min-w-[160px] text-center'>{data.createdAt}</p>
-//   <p className='text-sm font-semibold text-textColor w-275 min-w-[160px] text-center'>{data.role}</p>
-//   </div>
-//   ))}
-
-export const DashboardUserCard = ({ data, idx }) => {
-  console.log(data,idx)
-  return (
-    <motion.div className="relative w-full rounded-md flex items-center justify-between py-4 bg-lightOverlay cursor-pointer hover:bg-card hover:shadow-md">
-      {/*user Image*/}
-      <div className="w-275 min-w-[160px] flex items-center justify-center">
-      <img src={data.user.imageUrl} alt="" className='w-10 h-10 object-cover rounded-md min-w-[40px] shadow-md'/>
-      </div>
-    </motion.div>
-  );
-};
