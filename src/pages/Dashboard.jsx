@@ -4,9 +4,16 @@ import {IoHome} from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import {isActiveStyles,isNotActiveStyles} from '../utils/styles'
 import {Routes,Route} from "react-router-dom"
-import {DashboardUser,DashboardAlbums,DashboardArtist,DashboardSongs,DashboardHome,Dashboardnewsong} from "../pages"
+import {DashboardUser,DashboardAlbums,DashboardArtist,DashboardSongs,DashboardHome,Dashboardnewsong,Alert} from "../pages"
+import { useStateValue } from '../Context/stateProvider'
 
 const Dashboard = () => {
+  const [
+    {
+      alertType
+    },
+    dispatch,
+  ] = useStateValue();
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center bg-primary'>
     <Header/>
@@ -26,6 +33,9 @@ const Dashboard = () => {
     <Route path='/home' element={<DashboardHome/>}/>
     <Route path='/newSong' element={<Dashboardnewsong/>}/>
     </Routes>
+    {alertType && (
+      <Alert type={alertType}/>
+    )}
     </div>
     </div>
   )

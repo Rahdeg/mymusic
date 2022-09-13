@@ -7,5 +7,6 @@ export  const initialState= {
     filterTerm:"all",
     artistFilter:null,
     languageFilter:null,
-    albumFilter:null
+    albumFilter:null,
+    alertType:null
 }

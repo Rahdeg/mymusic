@@ -69,19 +69,19 @@ export const deleteUser= async (userId)=>{
     }
 }
 
-export const saveAlbums= async ()=>{
+export const saveAlbums= async (data)=>{
     try {
-        const res = await axios.post(`${baseUrl}api/album/save`)
-        return res.data;
+        const res = axios.post(`${baseUrl}api/album/save`,{...data})
+        return (await res).data.album;
     } catch (error) {
         return null;
     }
 }
 
-export const saveArtist= async ()=>{
+export const saveArtist= async (data)=>{
     try {
-        const res = await axios.post(`${baseUrl}api/album/save`)
-        return res.data;
+        const res = axios.post(`${baseUrl}api/artist/save`,{...data})
+        return (await res).data.artist;
     } catch (error) {
         return null;
     }
