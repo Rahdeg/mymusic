@@ -60,7 +60,7 @@ export const Songcontainer=({data})=>{
   return(
     <div className='w-full flex flex-wrap gap-3 items-center justify-evenly'>
          {data && data.map((song,idx)=>(
-          <Songcard key={song._id} data={song} index={idx}/>
+          <Songcard key={song._id} data={song} index={idx} type="song"/>
          ))}
     </div>
   )

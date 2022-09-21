@@ -8,5 +8,8 @@ export  const initialState= {
     artistFilter:null,
     languageFilter:null,
     albumFilter:null,
-    alertType:null
+    alertType:null,
+    isAudioPlaying:false,
+    audioIndex:0
+
 }

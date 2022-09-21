@@ -187,7 +187,6 @@ const Dashboardnewsong = () => {
         setSongAlbumCover(null);
         setisImageloading(false);
         setisAlbumloading(false);
-        
       });
     } else {
       setisAudioloading(true);
@@ -208,7 +207,15 @@ const Dashboardnewsong = () => {
     }
   };
   const saveSong = () => {
-    if (!songImageCover || !songAudioCover) {
+    if (
+      !songImageCover ||
+      !songAudioCover ||
+      !artistFilter ||
+      !languageFilter ||
+      !songname ||
+      !albumFilter ||
+      !filterTerm
+    ) {
       //alert
       dispatch({
         type: actionType.SET_ALERTTYPE,
@@ -500,13 +507,7 @@ export const Fileupload = ({
   isLoading,
   isImage,
 }) => {
-  const [
-    {
-      allArtists,
-     
-    },
-    dispatch,
-  ] = useStateValue();
+  const [{ allArtists }, dispatch] = useStateValue();
   const uploadFile = (e) => {
     isLoading(true);
     const uploadedFile = e.target.files[0];
@@ -548,7 +549,6 @@ export const Fileupload = ({
             });
           }, 4000);
         });
-        
       }
     );
   };

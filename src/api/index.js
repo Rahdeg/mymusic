@@ -95,3 +95,30 @@ export const saveSongs= async (data)=>{
         return null;
     }
 }
+
+export const deleteAlbum= async (userId)=>{
+    try {
+        const res = await axios.delete(`${baseUrl}api/album/delete/${userId}`)
+        return res.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const deleteArtist= async (userId)=>{
+    try {
+        const res = await axios.delete(`${baseUrl}api/artist/delete/${userId}`)
+        return res.data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const deleteSong= async (userId)=>{
+    try {
+        const res = await axios.delete(`${baseUrl}api/song/delete/${userId}`)
+        return res.data;
+    } catch (error) {
+        return null;
+    }
+}

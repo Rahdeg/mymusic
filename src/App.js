@@ -1,19 +1,20 @@
 import './App.css';
 import {Route,Routes, useNavigate} from 'react-router-dom'
-import {Dashboard, Home, Login} from './pages'
+import {Dashboard, Home, Login, MusicPlayer} from './pages'
 import { useEffect, useState } from 'react';
 import { app } from './config/firebase';
 import { getAuth } from 'firebase/auth';
-import {AnimatePresence} from 'framer-motion'
+import {AnimatePresence,motion} from 'framer-motion'
 import {validateUser} from './api/index'
 import {useStateValue} from "./Context/stateProvider"
 import { actionType } from './Context/reducer';
+import { FaAutoprefixer } from 'react-icons/fa';
+
 
 function App() {
   const [auth, setauth] = useState(false||window.localStorage.getItem('auth')==='true')
   const firebase= getAuth(app);
-  const [{user},dispatch] = useStateValue() 
- 
+  const [{user,isAudioPlaying},dispatch] = useStateValue() 
   
 console.log(auth)
 const Navigate= useNavigate();
@@ -51,7 +52,15 @@ const Navigate= useNavigate();
       <Route path='/*' element={<Home/>}/>
       <Route path='/dashboard/*' element={<Dashboard/>}/>
     </Routes>
-   
+      {isAudioPlaying && (
+        <motion.div 
+        initial={{opacity:0, y:50}}
+        animate={{opacity:1, y:0}}
+        className={`fixed min-w-[700px] h-26 inset-x-0 bottom-0 bg-cardOverlay drop-shadow-2xl backdrop-blur-md flex items-center justify-center`}
+        >
+        <MusicPlayer/>
+        </motion.div>
+      )}
     </div>
     </AnimatePresence>
   );

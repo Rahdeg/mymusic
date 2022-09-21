@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useStateValue } from "../Context/stateProvider";
 import {DashboardUserCard} from '../cards/cards'
+import { getAllUsers } from "../api";
+import { actionType } from "../Context/reducer";
 
 
 const DashboardUser = () => {
   const [{ allUsers,user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    if (!allUsers) {
+      getAllUsers().then((data)=>{
+        dispatch({
+          type: actionType.SET_ALLUSERS,
+          allUsers: data,
+         })
+      })
+    }
+  }, [])
+  
   return (
     <div className="w-full p-4 flex items-center justify-center flex-col">
       {/*filter*/}

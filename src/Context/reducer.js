@@ -8,7 +8,9 @@ export const actionType = {
   SET_ARTISTFILTER:"SET_ARTISTFILTER",
   SET_LANGUAGEFILTER:"SET_LANGUAGEFILTER",
   SET_ALBUMFILTER:"SET_ALBUMFILTER",
-  SET_ALERTTYPE:"SET_ALERTTYPE"
+  SET_ALERTTYPE:"SET_ALERTTYPE",
+  SET_ISAUDIOPLAYING:"SET_ISAUDIOPLAYING",
+  SET_AUDIOINDEX:"SET_AUDIOINDEX"
 };
 
 const reducer = (state, action) => {
@@ -65,6 +67,16 @@ const reducer = (state, action) => {
           ...state,
           alertType: action.alertType,
         };
+        case actionType.SET_ISAUDIOPLAYING:
+        return {
+          ...state,
+          isAudioPlaying: action.isAudioPlaying,
+        };
+        case actionType.SET_AUDIOINDEX:
+          return {
+            ...state,
+            audioIndex: action.audioIndex,
+          };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { bgColors } from "../utils/styles";
 import {changeUserRole, getAllUsers,deleteUser} from "../api/index"
 import {actionType} from '../Context/reducer'
@@ -11,6 +11,19 @@ export const DashboardUserCard = ({ data, idx, user }) => {
   const [isUserRole, setIsUserRole] = useState(false);
   const [{ allUsers }, dispatch] = useStateValue();
   const createdAt = moment(new Date(data.createdAt)).format("MMMM Do YYYY");
+
+
+  useEffect(() => {
+    if (!allUsers) {
+      getAllUsers().then((data)=>{
+        dispatch({
+          type: actionType.SET_ALLUSERS,
+          allUsers: data,
+         })
+      })
+    }
+  }, [])
+  
 
   const deleteUsers=(userId)=>{
       deleteUser(userId).then((res)=>{

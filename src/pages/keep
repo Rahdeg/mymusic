@@ -359,3 +359,395 @@ let result = timRegex.test(timStr);
 let favWord = "favorite";
 let favRegex = /favou?rite/; // Change this line
 let result = favRegex.test(favWord);
+
+let quit = "qu";
+let noquit = "qt";
+let quRegex= /q(?=u)/;
+let qRegex = /q(?!u)/;
+quit.match(quRegex);
+noquit.match(qRegex);
+
+
+let sampleWord = "astronaut";
+let pwRegex = /(?=\w{6})(?=\w*\d{2})/; // Change this line
+let result = pwRegex.test(sampleWord);
+
+let testStr = "Pumpkin";
+let testRegex = /P(engu|umpk)in/;
+testRegex.test(testStr);
+
+let myString = "Eleanor Roosevelt";
+let myRegex = /(Franklin|Eleanor).*Roosevelt/; // Change this line
+let result = myRegex.test(myString); // Change this line
+// After passing the challenge experiment with myString and see how the grouping works
+
+let repeatStr = "row row row your boat";
+let repeatRegex = /(\w+) \1 \1/; // occur 3rice
+repeatRegex.test(repeatStr); // Returns true
+repeatStr.match(repeatRegex); // Returns ["row row row", "row"]
+
+let repeatNum = "42 42 42 42";
+let reRegex = /^(\d+) \1 \1$/; // Change this line
+let result = reRegex.test(repeatNum);
+
+let wrongText = "The sky is silver.";
+let silverRegex = /silver/;
+wrongText.replace(silverRegex, "blue");
+The replace call would return the string The sky is blue..
+
+
+"Code Camp".replace(/(\w+)\s(\w+)/, '$2 $1');
+The replace call would return the string Camp Code.
+
+let str = "one two three";
+let fixRegex = /(\w+)\s(\w+)\s(\w+)/; // Change this line
+let replaceText = "$3 $2 $1"; // Change this line
+let result = str.replace(fixRegex, replaceText);
+undefined
+result
+'three two one'
+
+let hello = "   Hello, World!  ";
+let wsRegex = /^\s+|\s+$/g; // Change this line
+let result = hello.replace(wsRegex,''); // Change this line
+undefined
+result
+'Hello, World!'
+
+console.log();
+console.clear();
+typeof(hello);
+
+console.log(typeof "");
+console.log(typeof 0);
+console.log(typeof []);
+console.log(typeof {});
+
+
+let myArray = [1, 2, 3];
+let arraySum = myArray.reduce((previous, current) =>  previous + current);
+console.log(`Sum of array values is: ${arraySum}`);
+
+function countToFive() {
+  let firstFive = "12345";
+  let len = firstFive.length;
+  // Only change code below this line
+  for (let i = 0; i < len; i++) {
+  // Only change code above this line
+    console.log(firstFive[i]);
+  }
+}
+
+countToFive();
+
+function zeroArray(m, n) {
+  // Creates a 2-D array with m rows and n columns of zeroes
+  let newArray = [];
+  let row = [];
+  for (let i = 0; i < m; i++) {
+    // Adds the m-th row into newArray
+    let row = []
+    for (let j = 0; j < n; j++) {
+      // Pushes n zeroes into the current row to create the columns
+      row.push(0);
+    }
+    // Pushes the current row, which now has n zeroes in it, to the array
+    newArray.push(row);
+  }
+  return newArray;
+}
+
+let matrix = zeroArray(3, 2);
+console.log(matrix);
+
+function myFunc() {
+  for (let i = 1; i <= 4; i += 2) {
+    console.log("Still going!");
+  }
+}
+
+let myArray = ["a", "b", "c", "d"];
+// Only change code below this line
+myArray[1]='z';
+// Only change code above this line
+console.log(myArray);
+
+function mixedNumbers(arr) {
+  // Only change code below this line
+arr.unshift('I', 2, 'three')
+arr.push(7, 'VIII', 9);
+
+  // Only change code above this line
+  return arr;
+}
+
+console.log(mixedNumbers(['IV', 5, 'six']));
+
+
+function popShift(arr) {
+  let popped=arr.pop(); // Change this line
+  let shifted=arr.shift(); // Change this line
+  return [shifted, popped];
+}
+
+console.log(popShift(['challenge', 'is', 'not', 'complete']));
+
+const arr = [2, 4, 5, 1, 7, 5, 2, 1];
+// Only change code below this line
+arr.splice(0,1,);
+arr.splice(3,4);
+// Only change code above this line
+console.log(arr);
+
+const numbers = [10, 11, 12, 12, 15];
+const startIndex = 3;
+const amountToDelete = 1;
+
+numbers.splice(startIndex, amountToDelete, 13, 14);
+console.log(numbers);
+
+numbers array would now be [ 10, 11, 12, 13, 14, 15 ].
+
+
+function htmlColorNames(arr) {
+  // Only change code below this line
+const startIndex = 0;
+const amountToDelete = 2;
+arr.splice(startIndex,amountToDelete,'DarkSalmon','BlanchedAlmond')
+  // Only change code above this line
+  return arr;
+}
+
+console.log(htmlColorNames(['DarkGoldenRod', 'WhiteSmoke', 'LavenderBlush', 'PaleTurquoise', 'FireBrick']));
+
+function copyMachine(arr, num) {
+  let newArr = [];
+  while (num >= 1) {
+    // Only change code below this line
+  newArr.push([...arr]);
+    // Only change code above this line
+    num--;
+  }
+  return newArr;
+}
+
+console.log(copyMachine([true, false, true], 2));
+function spreadOut() {
+  let fragment = ['to', 'code'];
+  let sentence  = ['learning', ...fragment,  'is', 'fun']; // Change this line
+  return sentence;
+}
+
+console.log(spreadOut());
+
+
+function quickCheck(arr, elem) {
+  // Only change code below this line
+ if(arr.indexOf(elem)>= 0){
+  return true;
+}else{
+  return false;
+}
+  // Only change code above this line
+}
+
+console.log(quickCheck(['squash', 'onions', 'shallots'], 'mushrooms'));
+
+function filteredArray(arr, elem) {
+  let newArr = [];
+  // Only change code below this line
+for (let i = 0; i < arr.length; i++) {
+    if (arr[i].indexOf(elem) == -1) {
+      newArr.push(arr[i]);
+    }
+  }
+  // Only change code above this line
+  return newArr;
+}
+
+console.log(filteredArray([[3, 2, 3], [1, 6, 3], [3, 13, 26], [19, 3, 9]], 3));
+
+let foods = {
+  apples: 25,
+  oranges: 32,
+  plums: 28,
+  bananas: 13,
+  grapes: 35,
+  strawberries: 27
+};
+
+function checkInventory(scannedItem) {
+  // Only change code below this line
+return foods[scannedItem]
+
+  // Only change code above this line
+}
+
+console.log(checkInventory("apples"));
+
+let foods = {
+  apples: 25,
+  oranges: 32,
+  plums: 28,
+  bananas: 13,
+  grapes: 35,
+  strawberries: 27
+};
+
+// Only change code below this line
+delete foods.oranges
+delete foods.plums
+delete foods.strawberries
+// Only change code above this line
+
+console.log(foods);
+
+users.hasOwnProperty('Alan');
+'Alan' in users;
+
+let users = {
+  Alan: {
+    age: 27,
+    online: true
+  },
+  Jeff: {
+    age: 32,
+    online: true
+  },
+  Sarah: {
+    age: 48,
+    online: true
+  },
+  Ryan: {
+    age: 19,
+    online: true
+  }
+};
+
+
+function isEveryoneHere(userObj) {
+  // Only change code below this line
+  if(userObj.hasOwnProperty('Alan')|| userObj.hasOwnProperty('Jeff')|| userObj.hasOwnProperty('Sarah')|| userObj.hasOwnProperty('Ryan')){
+return true;
+  }else{
+ return false;
+  }
+ 
+  // Only change code above this line
+}
+
+console.log(isEveryoneHere(users));
+
+let users = {
+  Alan: {
+    age: 27,
+    online: true
+  },
+  Jeff: {
+    age: 32,
+    online: true
+  },
+  Sarah: {
+    age: 48,
+    online: true
+  },
+  Ryan: {
+    age: 19,
+    online: true
+  }
+};
+
+function isEveryoneHere(userObj) {
+  // Only change code below this line
+  if('Alan' in userObj && 'Jeff' in userObj && 'Sarah' in userObj && 'Ryan' in userObj ){
+return true;
+  }else{
+ return false;
+  }
+ 
+  // Only change code above this line
+}
+
+console.log(isEveryoneHere(users));
+
+const users = {
+  Alan: {
+    online: false
+  },
+  Jeff: {
+    online: true
+  },
+  Sarah: {
+    online: false
+  }
+}
+
+function countOnline(usersObj) {
+  // Only change code below this line
+let result = 0;
+  for (let user in usersObj) {
+    if (usersObj[user].online === true) {
+      result++;
+    }
+  }
+  return result;
+  // Only change code above this line
+}
+
+console.log(countOnline(users));
+
+let users = {
+  Alan: {
+    age: 27,
+    online: false
+  },
+  Jeff: {
+    age: 32,
+    online: true
+  },
+  Sarah: {
+    age: 48,
+    online: false
+  },
+  Ryan: {
+    age: 19,
+    online: true
+  }
+};
+
+function getArrayOfUsers(obj) {
+  // Only change code below this line
+return Object.keys(obj);
+  // Only change code above this line
+}
+
+console.log(getArrayOfUsers(users));
+
+let user = {
+  name: 'Kenneth',
+  age: 28,
+  data: {
+    username: 'kennethCodesAllDay',
+    joinDate: 'March 26, 2016',
+    organization: 'freeCodeCamp',
+    friends: [
+      'Sam',
+      'Kira',
+      'Tomo'
+    ],
+    location: {
+      city: 'San Francisco',
+      state: 'CA',
+      country: 'USA'
+    }
+  }
+};
+
+function addFriend(userObj, friend) {
+  // Only change code below this line
+userObj.data.friends.push(friend);
+return user.data.friends
+  // Only change code above this line
+}
+
+console.log(addFriend(user, 'Pete'));
