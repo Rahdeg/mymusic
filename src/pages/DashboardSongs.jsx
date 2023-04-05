@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import {NavLink} from 'react-router-dom'
-import {IoAdd,IoPause,IoPlay,IoTrash} from 'react-icons/io5'
+import {IoAdd} from 'react-icons/io5'
 import {AiOutlineClear} from "react-icons/ai";
-import { useStateValue } from '../Context/stateProvider';
-import { getAllSongs } from '../api';
-import { actionType } from '../Context/reducer';
 import Songcard from './Songcard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllSongs } from '../features/songs/songSlice';
 
 
 
 const DashboardSongs = () => {
   const [songfilter, setsongfilter] = useState('');
   const [isfocus, setisfocus] = useState(false);
-  const [{allSongs }, dispatch] = useStateValue();
+  const { allSongs} = useSelector((store) => store.songs);
+  const dispat = useDispatch();
 
   useEffect(() => {
-    if (!allSongs) {
-      getAllSongs().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLSONGS,
-          allSongs: data,
-         })
-      })
+    if (!allSongs.length) {
+      dispat(getAllSongs());
     }
   }, [])
   

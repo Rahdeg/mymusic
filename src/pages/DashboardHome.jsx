@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useStateValue } from '../Context/stateProvider';
-import {getAllArtist,getAllAlbums,getAllSongs} from '../api/index'
+import {getAllArtist,getAllAlbums} from '../api/index'
 import { actionType } from '../Context/reducer';
 import {  FaUsers } from 'react-icons/fa'
 import {GiLoveSong,GiMusicalNotes} from 'react-icons/gi'
@@ -8,11 +8,13 @@ import {RiUserStarFill} from 'react-icons/ri'
 import {DashboardCard} from '../cards/cards'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../features/users/userSlices';
+import { getAllSongs } from '../features/songs/songSlice';
 
 
 const DashboardHome = () => {
-  const [{allArtists,allAlbums,allSongs},dispatch]=useStateValue();
+  const [{allArtists,allAlbums},dispatch]=useStateValue();
   const { allUsers} = useSelector((store) => store.user);
+  const { allSongs} = useSelector((store) => store.songs);
 
   const dispat = useDispatch();
 
@@ -37,13 +39,8 @@ const DashboardHome = () => {
          })
        }) 
     }
-    if (!allSongs) {
-      getAllSongs().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLSONGS,
-          allSongs: data,
-         })
-       }) 
+    if (!allSongs.length) {
+      dispat(getAllSongs());
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

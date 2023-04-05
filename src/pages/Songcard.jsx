@@ -7,7 +7,6 @@ import {
   deleteSong,
   getAllAlbums,
   getAllArtist,
-  getAllSongs,
 } from "../api/index";
 import {
   ref,
@@ -16,11 +15,15 @@ import {
 import { useStateValue } from "../Context/stateProvider";
 import { actionType } from "../Context/reducer";
 import { storage } from "../config/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllSongs } from "../features/songs/songSlice";
 
 const Songcard = ({ data, index, type, key }) => {
   const [isdelete, setisdelete] = useState(false);
-  const [{ alertType, allArtists, allAlbums, allSongs, isAudioPlaying, audioIndex }, dispatch] =
+  const [{ alertType, allArtists, allAlbums, isAudioPlaying, audioIndex }, dispatch] =
     useStateValue();
+    const { allSongs} = useSelector((store) => store.songs);
+    const dispat = useDispatch();
 
   const deleteCard = (data) => {
     if (type === "album") {
@@ -113,12 +116,7 @@ const Songcard = ({ data, index, type, key }) => {
               alertType: null,
             });
           }, 4000);
-          getAllSongs().then((song) => {
-            dispatch({
-              type: actionType.SET_ALLSONGS,
-              allSongs: song,
-            });
-          });
+          dispat(getAllSongs());
         } else {
           dispatch({
             type: actionType.SET_ALERTTYPE,

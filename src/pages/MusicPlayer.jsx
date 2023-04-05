@@ -7,10 +7,12 @@ import "react-h5-audio-player/lib/styles.css";
 import { getAllSongs } from "../api";
 import { actionType } from "../Context/reducer";
 import { IoClose, IoMusicalNote } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const MusicPlayer = () => {
   const [isPlayList, setIsPlayList] = useState(false);
-  const [{ allSongs, isAudioPlaying, audioIndex }, dispatch] = useStateValue();
+  const [{isAudioPlaying, audioIndex }, dispatch] = useStateValue();
+  const { allSongs} = useSelector((store) => store.songs);
 
   const closePlayer =()=>{
     dispatch({
@@ -103,7 +105,7 @@ const MusicPlayer = () => {
 export const PlayListCard = () => {
   const [{ allSongs, isAudioPlaying, audioIndex }, dispatch] = useStateValue();
   useEffect(() => {
-    if (!allSongs) {
+    if (!allSongs.length) {
       getAllSongs().then((data) => {
         dispatch({
           type: actionType.SET_ALLSONGS,

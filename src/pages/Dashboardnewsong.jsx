@@ -13,7 +13,6 @@ import { storage } from "../config/firebase";
 import {
   getAllAlbums,
   getAllArtist,
-  getAllSongs,
   saveAlbums,
   saveArtist,
   saveSongs,
@@ -22,6 +21,8 @@ import { useStateValue } from "../Context/stateProvider";
 import { actionType } from "../Context/reducer";
 import { BiCloudUpload } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { getAllSongs } from "../features/songs/songSlice";
 
 const Dashboardnewsong = () => {
   const [songname, setsongname] = useState("");
@@ -57,6 +58,8 @@ const Dashboardnewsong = () => {
     },
     dispatch,
   ] = useStateValue();
+
+  const dispat = useDispatch();
 
   useEffect(() => {
     if (!allArtists) {
@@ -241,12 +244,7 @@ const Dashboardnewsong = () => {
         category: filterTerm,
       };
       saveSongs(data).then((res) => {
-        getAllSongs().then((song) => {
-          dispatch({
-            type: actionType.SET_ALLSONGS,
-            allSongs: song,
-          });
-        });
+        dispat(getAllSongs());
       });
       dispatch({
         type: actionType.SET_ALERTTYPE,
