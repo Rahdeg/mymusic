@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react'
 import { useStateValue } from '../Context/stateProvider';
-import {getAllUsers,getAllArtist,getAllAlbums,getAllSongs} from '../api/index'
+import {getAllArtist,getAllAlbums,getAllSongs} from '../api/index'
 import { actionType } from '../Context/reducer';
 import {  FaUsers } from 'react-icons/fa'
 import {GiLoveSong,GiMusicalNotes} from 'react-icons/gi'
 import {RiUserStarFill} from 'react-icons/ri'
 import {DashboardCard} from '../cards/cards'
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsers } from '../features/users/userSlices';
 
 
 const DashboardHome = () => {
-  const [{allUsers,allArtists,allAlbums,allSongs},dispatch]=useStateValue();
+  const [{allArtists,allAlbums,allSongs},dispatch]=useStateValue();
+  const { allUsers} = useSelector((store) => store.user);
+
+  const dispat = useDispatch();
 
   useEffect(() => {
-    if (!allUsers) {
-      getAllUsers().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLUSERS,
-          allUsers: data,
-         })
-       }) 
+    if (!allUsers.length) {
+      dispat(getAllUsers());
     }
 
     if (!allArtists) {

@@ -5,29 +5,25 @@ import { useEffect, useState } from 'react';
 import { app } from './config/firebase';
 import { getAuth } from 'firebase/auth';
 import {AnimatePresence,motion} from 'framer-motion'
-import {validateUser} from './api/index'
 import {useStateValue} from "./Context/stateProvider"
 import { actionType } from './Context/reducer';
-import { FaAutoprefixer } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { userValidator } from './features/users/userSlices';
 
 
 function App() {
   const [auth, setauth] = useState(false||window.localStorage.getItem('auth')==='true')
   const firebase= getAuth(app);
-  const [{user,isAudioPlaying},dispatch] = useStateValue() 
+  const [{user,isAudioPlaying},dispatch] = useStateValue();
+  const dispat = useDispatch(); 
   
-console.log(auth)
+
 const Navigate= useNavigate();
   useEffect(() => {
     firebase.onAuthStateChanged((userCred)=>{
       if (userCred) {
         userCred.getIdToken().then((token)=>{
-         validateUser(token).then(data=>{
-         dispatch({
-          type: actionType.SET_USER,
-          user: data,
-         })
-         })
+         dispat(userValidator(token));
         })
       }else{
         setauth(false);

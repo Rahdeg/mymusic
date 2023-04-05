@@ -3,16 +3,17 @@ import {Logo} from '../assets/img'
 import { NavLink, useNavigate} from 'react-router-dom'
 import {isActiveStyles,isNotActiveStyles} from '../utils/styles'
 import { FaCrown } from 'react-icons/fa'
-import {useStateValue} from "../Context/stateProvider"
 import {motion} from "framer-motion"
 import { app } from '../config/firebase'
 import { getAuth } from 'firebase/auth'
+import { useSelector } from 'react-redux'
 
 
 const Header = () => {
     // const [isActive, setisActive] = useState(true)
     const [ismenu, setismenu] = useState(false)
-    const [{user},dispatch]=useStateValue();
+    const { user} = useSelector((store) => store.user);
+   
     const navigate = useNavigate();
     
 

@@ -1,21 +1,19 @@
 import React, { useEffect } from "react";
 import { useStateValue } from "../Context/stateProvider";
 import {DashboardUserCard} from '../cards/cards'
-import { getAllUsers } from "../api";
 import { actionType } from "../Context/reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../features/users/userSlices";
 
 
 const DashboardUser = () => {
-  const [{ allUsers,user }, dispatch] = useStateValue();
+  const { allUsers,user } = useSelector((store) => store.user);
+  const dispat = useDispatch();
+
 
   useEffect(() => {
-    if (!allUsers) {
-      getAllUsers().then((data)=>{
-        dispatch({
-          type: actionType.SET_ALLUSERS,
-          allUsers: data,
-         })
-      })
+    if (!allUsers.length) {
+     dispat(getAllUsers());
     }
   }, [])
   
