@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl ='http://54.144.215.171:5000/'
+const baseUrl ='http://localhost:5000/'
 
 export const validateUser= async (token)=>{
     try {
