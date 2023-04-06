@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useStateValue } from '../Context/stateProvider';
-import {getAllArtist,getAllAlbums} from '../api/index'
 import { actionType } from '../Context/reducer';
 import {  FaUsers } from 'react-icons/fa'
 import {GiLoveSong,GiMusicalNotes} from 'react-icons/gi'
@@ -9,12 +8,16 @@ import {DashboardCard} from '../cards/cards'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../features/users/userSlices';
 import { getAllSongs } from '../features/songs/songSlice';
+import { getAllArtists } from '../features/artists/artistSlice';
+import { getAllAlbums } from '../features/album/albumSlice';
 
 
 const DashboardHome = () => {
-  const [{allArtists,allAlbums},dispatch]=useStateValue();
   const { allUsers} = useSelector((store) => store.user);
   const { allSongs} = useSelector((store) => store.songs);
+  const { allArtists} = useSelector((store) => store.artists);
+  const { allAlbums} = useSelector((store) => store.albums);
+  
 
   const dispat = useDispatch();
 
@@ -23,21 +26,11 @@ const DashboardHome = () => {
       dispat(getAllUsers());
     }
 
-    if (!allArtists) {
-      getAllArtist().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLARTIST,
-          allArtists: data,
-         })
-       }) 
+    if (!allArtists.length) {
+      dispat(getAllArtists());
     }
-    if (!allAlbums) {
-      getAllAlbums().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLALBUMS,
-          allAlbums: data,
-         })
-       }) 
+    if (!allAlbums.length) {
+      dispat(getAllAlbums());
     }
     if (!allSongs.length) {
       dispat(getAllSongs());

@@ -6,14 +6,10 @@ import {isActiveStyles,isNotActiveStyles} from '../utils/styles'
 import {Routes,Route} from "react-router-dom"
 import {DashboardUser,DashboardAlbums,DashboardArtist,DashboardSongs,DashboardHome,Dashboardnewsong,Alert} from "../pages"
 import { useStateValue } from '../Context/stateProvider'
+import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
-  const [
-    {
-      alertType
-    },
-    dispatch,
-  ] = useStateValue();
+  const { alertType } = useSelector((store) => store.user);
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center bg-primary'>
     <Header/>

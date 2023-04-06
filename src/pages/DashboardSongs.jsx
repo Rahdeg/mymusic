@@ -18,6 +18,7 @@ const DashboardSongs = () => {
     if (!allSongs.length) {
       dispat(getAllSongs());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (

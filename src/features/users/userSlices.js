@@ -8,6 +8,9 @@ const initialState = {
   user: [],
   allUsers:[],
   isLoading:false,
+  alertType:null,
+  isAudioPlaying:false,
+  audioIndex:0,
 };
 
 export const getAllUsers = createAsyncThunk('user/getAllUsers', async (thunkAPI) => {
@@ -51,13 +54,33 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // clearCart: (state) => {
-    //   state.cartItems = [];
-    // },
-    // removeItem: (state, action) => {
-    //   const itemId = action.payload;
-    //   state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
-    // },
+    positiveAlert: (state) => {
+      state.alertType = "success";
+    },
+    negativeAlert: (state) => {
+      state.alertType = "danger";
+    },
+    nullAlert: (state) => {
+      state.alertType = null;
+    },
+    closePlayer: (state) => {
+      state.isAudioPlaying = false;
+    },
+    openPlayer: (state) => {
+      state.isAudioPlaying = true;
+    },
+    zeroIndex: (state) => {
+      state.audioIndex = 0;
+    },
+    increaseIndex: (state) => {
+      state.audioIndex += 1;
+    },
+    decreaseIndex: (state) => {
+      state.audioIndex -= 1;
+    },
+    setIndex: (state,{payload}) => {
+      state.audioIndex = payload;
+    },
     // increase: (state, { payload }) => {
     //   const cartItem = state.cartItems.find((item) => item.id === payload.id);
     //   cartItem.amount = cartItem.amount + 1;
@@ -106,7 +129,7 @@ const userSlice = createSlice({
 });
 
 // console.log(cartSlice);
-export const { } =
+export const { positiveAlert,negativeAlert,nullAlert,openPlayer,closePlayer,zeroIndex,increaseIndex,decreaseIndex,setIndex} =
   userSlice.actions;
 
 export default userSlice.reducer;

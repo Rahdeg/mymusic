@@ -7,14 +7,15 @@ import { getAuth } from 'firebase/auth';
 import {AnimatePresence,motion} from 'framer-motion'
 import {useStateValue} from "./Context/stateProvider"
 import { actionType } from './Context/reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userValidator } from './features/users/userSlices';
 
 
 function App() {
   const [auth, setauth] = useState(false||window.localStorage.getItem('auth')==='true')
   const firebase= getAuth(app);
-  const [{user,isAudioPlaying},dispatch] = useStateValue();
+  const [{user},dispatch] = useStateValue();
+  const { isAudioPlaying } = useSelector((store) => store.user);
   const dispat = useDispatch(); 
   
 

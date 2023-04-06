@@ -3,23 +3,20 @@ import {NavLink} from 'react-router-dom'
 import {IoAdd,IoPause,IoPlay,IoTrash} from 'react-icons/io5'
 import {AiOutlineClear} from "react-icons/ai";
 import { useStateValue } from '../Context/stateProvider';
-import { getAllAlbums } from '../api';
 import { actionType } from '../Context/reducer';
 import Songcard from './Songcard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllAlbums } from '../features/album/albumSlice';
 
 const DashboardAlbums = () => {
   const [albumfilter, setalbumfilter] = useState('');
   const [isfocus, setisfocus] = useState(false);
-  const [{allAlbums }, dispatch] = useStateValue();
+  const { allAlbums} = useSelector((store) => store.albums);
+  const dispat = useDispatch();
 
   useEffect(() => {
-    if (!allAlbums) {
-      getAllAlbums().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLALBUMS,
-          allAlbums: data,
-         })
-      })
+    if (!allAlbums.length) {
+      dispat(getAllAlbums());
     }
   }, [])
 

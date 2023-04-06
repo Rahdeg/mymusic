@@ -3,25 +3,22 @@ import {NavLink} from 'react-router-dom'
 import {IoAdd,IoPause,IoPlay,IoTrash} from 'react-icons/io5'
 import {AiOutlineClear} from "react-icons/ai";
 import { useStateValue } from '../Context/stateProvider';
-import { getAllArtist } from '../api';
 import { actionType } from '../Context/reducer';
 import Songcard from './Songcard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllArtists } from '../features/artists/artistSlice';
 
 
 const DashboardArtist = () => {
 
   const [artistfilter, setartistfilter] = useState('');
   const [isfocus, setisfocus] = useState(false);
-  const [{allArtists }, dispatch] = useStateValue();
+  const { allArtists} = useSelector((store) => store.artists);
+  const dispat = useDispatch();
 
   useEffect(() => {
-    if (!allArtists) {
-      getAllArtist().then(data=>{
-        dispatch({
-          type: actionType.SET_ALLARTIST,
-          allArtists: data,
-         })
-      })
+    if (!allArtists.length) {
+      dispat(getAllArtists());
     }
   }, [])
 

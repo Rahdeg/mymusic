@@ -7,45 +7,32 @@ import "react-h5-audio-player/lib/styles.css";
 import { getAllSongs } from "../api";
 import { actionType } from "../Context/reducer";
 import { IoClose, IoMusicalNote } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {closePlayer,openPlayer,zeroIndex,increaseIndex,decreaseIndex,setIndex} from '../features/users/userSlices'
 
 const MusicPlayer = () => {
   const [isPlayList, setIsPlayList] = useState(false);
-  const [{isAudioPlaying, audioIndex }, dispatch] = useStateValue();
   const { allSongs} = useSelector((store) => store.songs);
+  const { audioIndex} = useSelector((store) => store.users);
+  const dispat = useDispatch();
 
-  const closePlayer =()=>{
-    dispatch({
-        type: actionType.SET_ISAUDIOPLAYING,
-        isAudioPlaying: false,
-      });
+  const closePlayers =()=>{
+    dispat(closePlayer());
   }
 
   const nextTrack = ()=>{
   if (audioIndex > allSongs.length - 1) {
-    dispatch({
-        type: actionType.SET_AUDIOINDEX,
-        audioIndex: 0, 
-      });
+    dispat(zeroIndex());
   }else{
-    dispatch({
-        type: actionType.SET_AUDIOINDEX,
-        audioIndex: audioIndex + 1,
-      });
+    dispat(increaseIndex());
   }
   }
 
   const previousTrack = ()=>{
   if (audioIndex===0) {
-    dispatch({
-        type: actionType.SET_AUDIOINDEX,
-        audioIndex: 0,
-      });
+    dispat(zeroIndex());
   }else {
-    dispatch({
-        type: actionType.SET_AUDIOINDEX,
-        audioIndex: audioIndex -1,
-      });
+    dispat(decreaseIndex());
   }
   }
   
@@ -54,7 +41,7 @@ const MusicPlayer = () => {
       <div className={`w-full flex items-center gap-3 p-4 relative`}>
         <img
           src={allSongs[audioIndex].imageUrl}
-          alt=""
+          alt="nn"
           className="w-40 h-20 object-cover rounded-md"
         />
         <div className="flex items-start flex-col">
@@ -96,37 +83,29 @@ const MusicPlayer = () => {
                 <PlayListCard/>
             )
         }
-        <IoClose onClick={closePlayer}/>
+        <IoClose onClick={closePlayers}/>
       </div>
     </div>
   );
 };
 
 export const PlayListCard = () => {
-  const [{ allSongs, isAudioPlaying, audioIndex }, dispatch] = useStateValue();
+  const { isAudioPlaying,audioIndex } = useSelector((store) => store.user);
+  const { allSongs} = useSelector((store) => store.songs);
+  const dispat= useDispatch();
+  
   useEffect(() => {
     if (!allSongs.length) {
-      getAllSongs().then((data) => {
-        dispatch({
-          type: actionType.SET_ALLSONGS,
-          allSongs: data,
-        });
-      });
+      dispat(getAllSongs());
     }
   }, []);
 
   const setCurrentSong = (index) => {
     if (!isAudioPlaying) {
-      dispatch({
-        type: actionType.SET_ISAUDIOPLAYING,
-        isAudioPlaying: true,
-      });
+      dispat(openPlayer());
     }
     if (audioIndex !== index) {
-      dispatch({
-        type: actionType.SET_AUDIOINDEX,
-        audioIndex: index,
-      });
+      dispat(setIndex(index));
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Filterbottons from "./Filterbottons";
 import { filterLanguage, filters } from "../utils/supportfunctions";
 import { motion } from "framer-motion";
+import {negativeAlert,nullAlert,positiveAlert} from '../features/users/userSlices'
 import {
   getStorage,
   ref,
@@ -11,8 +12,6 @@ import {
 } from "firebase/storage";
 import { storage } from "../config/firebase";
 import {
-  getAllAlbums,
-  getAllArtist,
   saveAlbums,
   saveArtist,
   saveSongs,
@@ -21,8 +20,10 @@ import { useStateValue } from "../Context/stateProvider";
 import { actionType } from "../Context/reducer";
 import { BiCloudUpload } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../features/songs/songSlice";
+import { getAllArtists } from "../features/artists/artistSlice";
+import { getAllAlbums } from "../features/album/albumSlice";
 
 const Dashboardnewsong = () => {
   const [songname, setsongname] = useState("");
@@ -45,16 +46,15 @@ const Dashboardnewsong = () => {
   const [songAlbumCover, setSongAlbumCover] = useState(null);
   const [Albumprogress, setAlbumprogress] = useState(0);
   const [albumName, setAlbumName] = useState("");
+  const { allArtists} = useSelector((store) => store.artists);
+  const { allAlbums} = useSelector((store) => store.albums);
 
   const [
     {
-      allArtists,
-      allAlbums,
       filterTerm,
       artistFilter,
       languageFilter,
       albumFilter,
-      alertType,
     },
     dispatch,
   ] = useStateValue();
@@ -62,35 +62,19 @@ const Dashboardnewsong = () => {
   const dispat = useDispatch();
 
   useEffect(() => {
-    if (!allArtists) {
-      getAllArtist().then((data) => {
-        dispatch({
-          type: actionType.SET_ALLARTIST,
-          allArtists: data,
-        });
-      });
+    if (!allArtists.length) {
+      dispat(getAllArtists());
     }
-    if (!allAlbums) {
-      getAllAlbums().then((data) => {
-        dispatch({
-          type: actionType.SET_ALLALBUMS,
-          allAlbums: data,
-        });
-      });
+    if (!allAlbums.length) {
+     dispat(getAllAlbums());
     }
   }, []);
 
   const uploadAlbum = () => {
     if (!songAlbumCover || !albumName) {
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "danger",
-      });
+      dispat(negativeAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+        dispat(nullAlert());
       }, 4000);
     } else {
       setisAlbumloading(true);
@@ -99,22 +83,11 @@ const Dashboardnewsong = () => {
         imageUrl: songAlbumCover,
       };
       saveAlbums(data).then((res) => {
-        getAllAlbums().then((album) => {
-          dispatch({
-            type: actionType.SET_ALLALBUMS,
-            allAlbums: album,
-          });
-        });
+       dispat(getAllAlbums());
       });
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "success",
-      });
+     dispat(positiveAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+        dispat(nullAlert());
       }, 4000);
       setAlbumName("");
       setisAlbumloading(false);
@@ -125,15 +98,9 @@ const Dashboardnewsong = () => {
   const uploadArtist = () => {
     if (!songArtistCover || !artistname || !twitter || !instagram) {
       //alert
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "danger",
-      });
+    dispat(negativeAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+        dispat(nullAlert());
       }, 4000);
     } else {
       setisArtistloading(true);
@@ -144,22 +111,11 @@ const Dashboardnewsong = () => {
         instagram: `www.instagram.com/${instagram}`,
       };
       saveArtist(data).then((res) => {
-        getAllArtist().then((artist) => {
-          dispatch({
-            type: actionType.SET_ALLARTIST,
-            allArtists: artist,
-          });
-        });
+        dispat(getAllArtists());
       });
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "success",
-      });
+      dispat(positiveAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+       dispat(nullAlert());
       }, 4000);
 
       setArtistname("");
@@ -175,15 +131,9 @@ const Dashboardnewsong = () => {
     if (isImage) {
       setisImageloading(true);
       setisAlbumloading(true);
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "success",
-      });
+     dispat(positiveAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+       dispat(nullAlert());
       }, 4000);
       deleteObject(deleteRef).then(() => {
         setSongImageCover(null);
@@ -193,15 +143,9 @@ const Dashboardnewsong = () => {
       });
     } else {
       setisAudioloading(true);
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "success",
-      });
+      dispat(positiveAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+        dispat(nullAlert());
       }, 4000);
       deleteObject(deleteRef).then(() => {
         setSongAudioCover(null);
@@ -220,15 +164,9 @@ const Dashboardnewsong = () => {
       !filterTerm
     ) {
       //alert
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "danger",
-      });
+      dispat(negativeAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+        dispat(nullAlert());
       }, 4000);
     } else {
       setisImageloading(true);
@@ -246,15 +184,9 @@ const Dashboardnewsong = () => {
       saveSongs(data).then((res) => {
         dispat(getAllSongs());
       });
-      dispatch({
-        type: actionType.SET_ALERTTYPE,
-        alertType: "success",
-      });
+      dispat(positiveAlert());
       setTimeout(() => {
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: null,
-        });
+        dispat(nullAlert());
       }, 4000);
       setsongname(null);
       setisAudioloading(false);
@@ -506,6 +438,8 @@ export const Fileupload = ({
   isImage,
 }) => {
   const [{ allArtists }, dispatch] = useStateValue();
+  const dispat = useDispatch();
+  
   const uploadFile = (e) => {
     isLoading(true);
     const uploadedFile = e.target.files[0];
@@ -521,30 +455,18 @@ export const Fileupload = ({
       },
       (error) => {
         console.log(error);
-        dispatch({
-          type: actionType.SET_ALERTTYPE,
-          alertType: "danger",
-        });
+        dispat(negativeAlert());
         setTimeout(() => {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: null,
-          });
+          dispat(nullAlert());
         }, 4000);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
           updateState(downloadUrl);
           isLoading(false);
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "success",
-          });
+          dispat(positiveAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+           dispat(nullAlert());
           }, 4000);
         });
       }

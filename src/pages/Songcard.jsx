@@ -5,24 +5,27 @@ import {
   deleteAlbum,
   deleteArtist,
   deleteSong,
-  getAllAlbums,
-  getAllArtist,
 } from "../api/index";
 import {
   ref,
   deleteObject,
 } from "firebase/storage";
 import { useStateValue } from "../Context/stateProvider";
+import {negativeAlert,nullAlert,openPlayer,positiveAlert, setIndex} from '../features/users/userSlices'
 import { actionType } from "../Context/reducer";
 import { storage } from "../config/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../features/songs/songSlice";
+import { getAllArtists } from "../features/artists/artistSlice";
+import { getAllAlbums } from "../features/album/albumSlice";
 
-const Songcard = ({ data, index, type, key }) => {
+const Songcard = ({ data, index, type}) => {
   const [isdelete, setisdelete] = useState(false);
-  const [{ alertType, allArtists, allAlbums, isAudioPlaying, audioIndex }, dispatch] =
+  const [{   }, dispatch] =
     useStateValue();
     const { allSongs} = useSelector((store) => store.songs);
+    const { allAlbums} = useSelector((store) => store.albums);
+    const { isAudioPlaying,audioIndex } = useSelector((store) => store.user);
     const dispat = useDispatch();
 
   const deleteCard = (data) => {
@@ -32,32 +35,14 @@ const Songcard = ({ data, index, type, key }) => {
       setisdelete(false);
       deleteAlbum(data._id).then((res) => {
         if (res.msg) {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "success",
-          });
+         dispat(positiveAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+           dispat(nullAlert());
           }, 4000);
-          getAllAlbums().then((album) => {
-            dispatch({
-              type: actionType.SET_ALLALBUMS,
-              allAlbums: album,
-            });
-          });
-        } else {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "danger",
-          });
+          dispat(getAllAlbums());        } else {
+          dispat(negativeAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+            dispat(nullAlert());
           }, 4000);
         }
       });
@@ -68,32 +53,15 @@ const Songcard = ({ data, index, type, key }) => {
       setisdelete(false);
       deleteArtist(data._id).then((res) => {
         if (res.msg) {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "success",
-          });
+         dispat(positiveAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+            dispat(nullAlert());
           }, 4000);
-          getAllArtist().then((artist) => {
-            dispatch({
-              type: actionType.SET_ALLARTIST,
-              allArtists: artist,
-            });
-          });
+         dispat(getAllArtists());
         } else {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "danger",
-          });
+          dispat(negativeAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+            dispat(nullAlert);
           }, 4000);
         }
       });
@@ -106,27 +74,15 @@ const Songcard = ({ data, index, type, key }) => {
       deleteObject(deleteRefAud).then(() => {});
       deleteSong(data._id).then((res) => {
         if (res.msg) {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "success",
-          });
+         dispat(positiveAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+           dispat(nullAlert());
           }, 4000);
           dispat(getAllSongs());
         } else {
-          dispatch({
-            type: actionType.SET_ALERTTYPE,
-            alertType: "danger",
-          });
+         dispat(negativeAlert());
           setTimeout(() => {
-            dispatch({
-              type: actionType.SET_ALERTTYPE,
-              alertType: null,
-            });
+            dispat(nullAlert());
           }, 4000);
         }
       });
@@ -135,16 +91,10 @@ const Songcard = ({ data, index, type, key }) => {
 
   const addToContext =()=>{
     if (!isAudioPlaying) {
-      dispatch({
-        type: actionType.SET_ISAUDIOPLAYING,
-        isAudioPlaying: true,
-      });
+      dispat(openPlayer());
     }
     if (audioIndex !== index) {
-      dispatch({
-        type: actionType.SET_AUDIOINDEX,
-        audioIndex: index,
-      });
+      dispat(setIndex(index));
     }
   }
 
