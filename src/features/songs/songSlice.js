@@ -7,6 +7,10 @@ const url = 'http://localhost:5000/';
 const initialState = {
   allSongs: [],
   isLoading:false,
+  filterTerm:"all",
+  artistFilter:null,
+  languageFilter:null,
+  albumFilter:null,
 };
 
 export const getAllSongs = createAsyncThunk('songs/getAllSongs', async (thunkAPI) => {
@@ -50,9 +54,18 @@ const songsSlice = createSlice({
   name: 'songs',
   initialState,
   reducers: {
-    // clearCart: (state) => {
-    //   state.cartItems = [];
-    // },
+    namedFilter: (state,{payload}) => {
+      state.filterTerm = payload;
+    },
+    nullFilter: (state) => {
+      state.filterTerm = null;
+    },
+    nullArtistFilter: (state) => {
+      state.artistFilter = null;
+    },
+    namedArtistFilter: (state,{payload}) => {
+      state.artistFilter = payload;
+    },
     // removeItem: (state, action) => {
     //   const itemId = action.payload;
     //   state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
@@ -94,6 +107,6 @@ const songsSlice = createSlice({
 });
 
 // console.log(cartSlice);
-export const { } = songsSlice.actions;
+export const { namedFilter,nullFilter,nullArtistFilter,namedArtistFilter} = songsSlice.actions;
 
 export default songsSlice.reducer;

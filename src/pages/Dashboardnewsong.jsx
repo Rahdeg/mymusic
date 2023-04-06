@@ -21,7 +21,7 @@ import { actionType } from "../Context/reducer";
 import { BiCloudUpload } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSongs } from "../features/songs/songSlice";
+import { getAllSongs, nullFilter,nullArtistFilter } from "../features/songs/songSlice";
 import { getAllArtists } from "../features/artists/artistSlice";
 import { getAllAlbums } from "../features/album/albumSlice";
 
@@ -48,11 +48,11 @@ const Dashboardnewsong = () => {
   const [albumName, setAlbumName] = useState("");
   const { allArtists} = useSelector((store) => store.artists);
   const { allAlbums} = useSelector((store) => store.albums);
+  const { filterTerm,artistFilter} = useSelector((store) => store.songs);
 
   const [
     {
-      filterTerm,
-      artistFilter,
+    
       languageFilter,
       albumFilter,
     },
@@ -193,10 +193,7 @@ const Dashboardnewsong = () => {
       setisImageloading(false);
       setSongImageCover(null);
       setSongAudioCover(null);
-      dispatch({
-        type: actionType.SET_ARTISTFILTER,
-        artistFilter: null,
-      });
+     dispat(nullArtistFilter());
       dispatch({
         type: actionType.SET_LANGUAGEFILTER,
         languageFilter: null,
@@ -205,10 +202,7 @@ const Dashboardnewsong = () => {
         type: actionType.SET_ALBUMFILTER,
         albumFilter: null,
       });
-      dispatch({
-        type: actionType.SET_FILTERTERM,
-        filterTerm: null,
-      });
+      dispat(nullFilter());
     }
   };
 

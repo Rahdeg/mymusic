@@ -14,6 +14,7 @@ const DashboardArtist = () => {
   const [artistfilter, setartistfilter] = useState('');
   const [isfocus, setisfocus] = useState(false);
   const { allArtists} = useSelector((store) => store.artists);
+  
   const dispat = useDispatch();
 
   useEffect(() => {

@@ -3,22 +3,23 @@ import { IoChevronDown } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { useStateValue } from "../Context/stateProvider";
 import { actionType } from "../Context/reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { namedArtistFilter, namedFilter } from "../features/songs/songSlice";
 
 const Filterbottons = ({ filterdata, flag }) => {
   const [filtername, setfiltername] = useState(null);
   const [filtermenu, setfiltermenu] = useState(false);
-  const [{ filterTerm, artistFilter, languageFilter, albumFilter }, dispatch] =
+  const [{  artistFilter, languageFilter, albumFilter }, dispatch] =
     useStateValue();
+    const { filterTerm} = useSelector((store) => store.songs);
+    const dispat = useDispatch()
 
   const updateFilter = (name) => {
     setfiltermenu(false);
     setfiltername(name);
 
     if (flag === "Artist") {
-      dispatch({
-        type: actionType.SET_ARTISTFILTER,
-        artisFilter: name,
-      });
+     dispat(namedArtistFilter(name));
     }
 
     if (flag === "Album") {
@@ -29,10 +30,7 @@ const Filterbottons = ({ filterdata, flag }) => {
     }
 
     if (flag === "Category") {
-      dispatch({
-        type: actionType.SET_FILTERTERM,
-        filterTerm: name,
-      });
+      dispat(namedFilter(name));
     }
 
     if (flag === "Language") {
