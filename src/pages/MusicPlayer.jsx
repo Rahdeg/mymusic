@@ -13,7 +13,7 @@ import {closePlayer,openPlayer,zeroIndex,increaseIndex,decreaseIndex,setIndex} f
 const MusicPlayer = () => {
   const [isPlayList, setIsPlayList] = useState(false);
   const { allSongs} = useSelector((store) => store.songs);
-  const { audioIndex} = useSelector((store) => store.users);
+  const { audioIndex} = useSelector((store) => store.user);
   const dispat = useDispatch();
 
   const closePlayers =()=>{
@@ -35,7 +35,7 @@ const MusicPlayer = () => {
     dispat(decreaseIndex());
   }
   }
-  
+  console.log(allSongs[audioIndex].songUrl);
   return (
     <div className="w-full flex items-center gap-3">
       <div className={`w-full flex items-center gap-3 p-4 relative`}>
@@ -119,6 +119,7 @@ export const PlayListCard = () => {
             animate={{ opacity: 1, translateX: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             onClick={() => setCurrentSong(index)}
+            key={index}
           >
             <IoMusicalNote className=" text-textColor group-hover:text-headingColor text-2xl cursor-pointer" />
             <div className="flex items-start flex-col">

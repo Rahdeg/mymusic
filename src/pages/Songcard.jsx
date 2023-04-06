@@ -102,7 +102,7 @@ const Songcard = ({ data, index, type}) => {
     <motion.div
       key={index}
       className="relative w-40 min-w-210 px-2 cursor-pointer py-4 hover:bg-card bg-gray-100 shadow-md rounded-lg flex flex-col items-center"
-      onClick={type==="song" && addToContext}
+      onClick={type==="song" ? addToContext : undefined }
     >
       <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
         <motion.img
