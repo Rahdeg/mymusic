@@ -15,11 +15,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../features/songs/songSlice";
 import { getAllArtists } from "../features/artists/artistSlice";
 import { getAllAlbums } from "../features/album/albumSlice";
+import { AiFillPlayCircle } from "react-icons/ai";
 
 const Songcard = ({ data, index, type }) => {
   const [isdelete, setisdelete] = useState(false);
   const { isAudioPlaying, audioIndex } = useSelector((store) => store.user);
   const dispat = useDispatch();
+
+  
 
   const deleteCard = (data) => {
     if (type === "album") {
@@ -96,7 +99,7 @@ const Songcard = ({ data, index, type }) => {
     <motion.div
       key={index}
       className="relative w-40 min-w-210 px-2 cursor-pointer py-4 hover:bg-card bg-gray-100 shadow-md rounded-lg flex flex-col items-center"
-      onClick={type === "song" ? addToContext : undefined}
+      
     >
       <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
         <motion.img
@@ -129,6 +132,14 @@ const Songcard = ({ data, index, type }) => {
           </span>
         )}
       </p>
+      {
+        type === "song" && (
+          <AiFillPlayCircle onClick={type === "song" ? addToContext : undefined} className=" text-3xl font-bold drop-shadow-md text-green-400 hover:text-green-600"/>
+        )
+      }
+      
+
+      
       <div className=" w-full absolute bottom-2 right-2 flex items-center justify-between px-4">
         <motion.i
           whileTap={{ scale: 0.75 }}
