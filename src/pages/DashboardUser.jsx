@@ -56,7 +56,7 @@ const DashboardUser = () => {
         {
           allUsers && (
             allUsers.map((data,idx)=>(
-              <DashboardUserCard data={data} idx={idx} user={user}/>
+              <DashboardUserCard data={data} idx={idx} user={user} key={idx}/>
             ))
           )
         }
