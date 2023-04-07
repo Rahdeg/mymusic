@@ -1,12 +1,12 @@
-import React from 'react'
-import {Header} from '../pages'
+import React from "react";
+import { Header } from "../pages";
 
 const Home = () => {
   return (
-    <div className='w-full h-auto flex flex-col items-center justify-center bg-primary'>
-    <Header/>
+    <div className="w-full h-auto flex flex-col items-center justify-center bg-primary">
+      <Header />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

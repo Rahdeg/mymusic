@@ -1,40 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { useStateValue } from "../Context/stateProvider";
 import { motion } from "framer-motion";
 import { RiPlayListFill } from "react-icons/ri";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { getAllSongs } from "../api";
-import { actionType } from "../Context/reducer";
+
 import { IoClose, IoMusicalNote } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import {closePlayer,openPlayer,zeroIndex,increaseIndex,decreaseIndex,setIndex} from '../features/users/userSlices'
+import {
+  closePlayer,
+  openPlayer,
+  zeroIndex,
+  increaseIndex,
+  decreaseIndex,
+  setIndex,
+} from "../features/users/userSlices";
 
 const MusicPlayer = () => {
   const [isPlayList, setIsPlayList] = useState(false);
-  const { allSongs} = useSelector((store) => store.songs);
-  const { audioIndex} = useSelector((store) => store.user);
+  const { allSongs } = useSelector((store) => store.songs);
+  const { audioIndex } = useSelector((store) => store.user);
   const dispat = useDispatch();
 
-  const closePlayers =()=>{
+  const closePlayers = () => {
     dispat(closePlayer());
-  }
+  };
 
-  const nextTrack = ()=>{
-  if (audioIndex > allSongs.length - 1) {
-    dispat(zeroIndex());
-  }else{
-    dispat(increaseIndex());
-  }
-  }
+  const nextTrack = () => {
+    if (audioIndex > allSongs.length - 1) {
+      dispat(zeroIndex());
+    } else {
+      dispat(increaseIndex());
+    }
+  };
 
-  const previousTrack = ()=>{
-  if (audioIndex===0) {
-    dispat(zeroIndex());
-  }else {
-    dispat(decreaseIndex());
-  }
-  }
+  const previousTrack = () => {
+    if (audioIndex === 0) {
+      dispat(zeroIndex());
+    } else {
+      dispat(decreaseIndex());
+    }
+  };
   console.log(allSongs[audioIndex].songUrl);
   return (
     <div className="w-full flex items-center gap-3">
@@ -61,11 +67,9 @@ const MusicPlayer = () => {
           </p>
           <motion.i
             whileTap={{ scale: 0.8 }}
-            onClick={()=>setIsPlayList(!isPlayList)}
+            onClick={() => setIsPlayList(!isPlayList)}
           >
-            <RiPlayListFill className=" text-textColor hover:text-headingColor" 
-            
-            />
+            <RiPlayListFill className=" text-textColor hover:text-headingColor" />
           </motion.i>
         </div>
         <div className="flex-1">
@@ -78,26 +82,23 @@ const MusicPlayer = () => {
             onClickPrevious={previousTrack}
           />
         </div>
-        {
-            isPlayList && (
-                <PlayListCard/>
-            )
-        }
-        <IoClose onClick={closePlayers}/>
+        {isPlayList && <PlayListCard />}
+        <IoClose onClick={closePlayers} />
       </div>
     </div>
   );
 };
 
 export const PlayListCard = () => {
-  const { isAudioPlaying,audioIndex } = useSelector((store) => store.user);
-  const { allSongs} = useSelector((store) => store.songs);
-  const dispat= useDispatch();
-  
+  const { isAudioPlaying, audioIndex } = useSelector((store) => store.user);
+  const { allSongs } = useSelector((store) => store.songs);
+  const dispat = useDispatch();
+
   useEffect(() => {
     if (!allSongs.length) {
       dispat(getAllSongs());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setCurrentSong = (index) => {

@@ -3,24 +3,23 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { bgColors } from "../utils/styles";
 import {changeUserRole,deleteUser} from "../api/index"
-import {actionType} from '../Context/reducer'
-import { useStateValue } from "../Context/stateProvider";
 import { MdDelete } from 'react-icons/md'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../features/users/userSlices";
 
 
 export const DashboardUserCard = ({ data, idx, user }) => {
   const [isUserRole, setIsUserRole] = useState(false);
-  const [{ allUsers }, dispatch] = useStateValue();
   const createdAt = moment(new Date(data.createdAt)).format("MMMM Do YYYY");
+  const { allUsers} = useSelector((store) => store.user);
   const dispat = useDispatch();
 
 
   useEffect(() => {
-    if (!allUsers) {
+    if (!allUsers.length) {
       dispat(getAllUsers());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
 

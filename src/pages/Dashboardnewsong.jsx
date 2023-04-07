@@ -2,26 +2,29 @@ import React, { useEffect, useState } from "react";
 import Filterbottons from "./Filterbottons";
 import { filterLanguage, filters } from "../utils/supportfunctions";
 import { motion } from "framer-motion";
-import {negativeAlert,nullAlert,positiveAlert} from '../features/users/userSlices'
 import {
-  getStorage,
+  negativeAlert,
+  nullAlert,
+  positiveAlert,
+} from "../features/users/userSlices";
+import {
   ref,
   getDownloadURL,
   uploadBytesResumable,
   deleteObject,
 } from "firebase/storage";
 import { storage } from "../config/firebase";
-import {
-  saveAlbums,
-  saveArtist,
-  saveSongs,
-} from "../api/index";
-import { useStateValue } from "../Context/stateProvider";
-import { actionType } from "../Context/reducer";
+import { saveAlbums, saveArtist, saveSongs } from "../api/index";
 import { BiCloudUpload } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSongs, nullFilter,nullArtistFilter } from "../features/songs/songSlice";
+import {
+  getAllSongs,
+  nullFilter,
+  nullArtistFilter,
+  nullLanguageFilter,
+  nullalbumFilter,
+} from "../features/songs/songSlice";
 import { getAllArtists } from "../features/artists/artistSlice";
 import { getAllAlbums } from "../features/album/albumSlice";
 
@@ -46,18 +49,11 @@ const Dashboardnewsong = () => {
   const [songAlbumCover, setSongAlbumCover] = useState(null);
   const [Albumprogress, setAlbumprogress] = useState(0);
   const [albumName, setAlbumName] = useState("");
-  const { allArtists} = useSelector((store) => store.artists);
-  const { allAlbums} = useSelector((store) => store.albums);
-  const { filterTerm,artistFilter} = useSelector((store) => store.songs);
-
-  const [
-    {
-    
-      languageFilter,
-      albumFilter,
-    },
-    dispatch,
-  ] = useStateValue();
+  const { allArtists } = useSelector((store) => store.artists);
+  const { allAlbums } = useSelector((store) => store.albums);
+  const { filterTerm, artistFilter, languageFilter, albumFilter } = useSelector(
+    (store) => store.songs
+  );
 
   const dispat = useDispatch();
 
@@ -66,8 +62,9 @@ const Dashboardnewsong = () => {
       dispat(getAllArtists());
     }
     if (!allAlbums.length) {
-     dispat(getAllAlbums());
+      dispat(getAllAlbums());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const uploadAlbum = () => {
@@ -83,9 +80,9 @@ const Dashboardnewsong = () => {
         imageUrl: songAlbumCover,
       };
       saveAlbums(data).then((res) => {
-       dispat(getAllAlbums());
+        dispat(getAllAlbums());
       });
-     dispat(positiveAlert());
+      dispat(positiveAlert());
       setTimeout(() => {
         dispat(nullAlert());
       }, 4000);
@@ -98,7 +95,7 @@ const Dashboardnewsong = () => {
   const uploadArtist = () => {
     if (!songArtistCover || !artistname || !twitter || !instagram) {
       //alert
-    dispat(negativeAlert());
+      dispat(negativeAlert());
       setTimeout(() => {
         dispat(nullAlert());
       }, 4000);
@@ -115,7 +112,7 @@ const Dashboardnewsong = () => {
       });
       dispat(positiveAlert());
       setTimeout(() => {
-       dispat(nullAlert());
+        dispat(nullAlert());
       }, 4000);
 
       setArtistname("");
@@ -131,12 +128,13 @@ const Dashboardnewsong = () => {
     if (isImage) {
       setisImageloading(true);
       setisAlbumloading(true);
-     dispat(positiveAlert());
+      dispat(positiveAlert());
       setTimeout(() => {
-       dispat(nullAlert());
+        dispat(nullAlert());
       }, 4000);
       deleteObject(deleteRef).then(() => {
         setSongImageCover(null);
+        setSongArtistCover(null);
         setSongAlbumCover(null);
         setisImageloading(false);
         setisAlbumloading(false);
@@ -193,15 +191,9 @@ const Dashboardnewsong = () => {
       setisImageloading(false);
       setSongImageCover(null);
       setSongAudioCover(null);
-     dispat(nullArtistFilter());
-      dispatch({
-        type: actionType.SET_LANGUAGEFILTER,
-        languageFilter: null,
-      });
-      dispatch({
-        type: actionType.SET_ALBUMFILTER,
-        albumFilter: null,
-      });
+      dispat(nullArtistFilter());
+      dispat(nullLanguageFilter());
+      dispat(nullalbumFilter());
       dispat(nullFilter());
     }
   };
@@ -431,9 +423,8 @@ export const Fileupload = ({
   isLoading,
   isImage,
 }) => {
-  const [{ allArtists }, dispatch] = useStateValue();
   const dispat = useDispatch();
-  
+
   const uploadFile = (e) => {
     isLoading(true);
     const uploadedFile = e.target.files[0];
@@ -460,7 +451,7 @@ export const Fileupload = ({
           isLoading(false);
           dispat(positiveAlert());
           setTimeout(() => {
-           dispat(nullAlert());
+            dispat(nullAlert());
           }, 4000);
         });
       }

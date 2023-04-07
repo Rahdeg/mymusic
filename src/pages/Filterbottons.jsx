@@ -1,32 +1,29 @@
 import React, { useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
 import { motion } from "framer-motion";
-import { useStateValue } from "../Context/stateProvider";
-import { actionType } from "../Context/reducer";
-import { useDispatch, useSelector } from "react-redux";
-import { namedArtistFilter, namedFilter } from "../features/songs/songSlice";
+import { useDispatch } from "react-redux";
+import {
+  namedArtistFilter,
+  namedFilter,
+  namedLanguageFilter,
+  namedalbumFilter,
+} from "../features/songs/songSlice";
 
 const Filterbottons = ({ filterdata, flag }) => {
   const [filtername, setfiltername] = useState(null);
   const [filtermenu, setfiltermenu] = useState(false);
-  const [{  artistFilter, languageFilter, albumFilter }, dispatch] =
-    useStateValue();
-    const { filterTerm} = useSelector((store) => store.songs);
-    const dispat = useDispatch()
+  const dispat = useDispatch();
 
   const updateFilter = (name) => {
     setfiltermenu(false);
     setfiltername(name);
 
     if (flag === "Artist") {
-     dispat(namedArtistFilter(name));
+      dispat(namedArtistFilter(name));
     }
 
     if (flag === "Album") {
-      dispatch({
-        type: actionType.SET_ALBUMFILTER,
-        albumFilter: name,
-      });
+      dispat(namedalbumFilter(name));
     }
 
     if (flag === "Category") {
@@ -34,10 +31,7 @@ const Filterbottons = ({ filterdata, flag }) => {
     }
 
     if (flag === "Language") {
-      dispatch({
-        type: actionType.SET_LANGUAGEFILTER,
-        languageFilter: name,
-      });
+      dispat(namedLanguageFilter(name));
     }
   };
 

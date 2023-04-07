@@ -66,6 +66,18 @@ const songsSlice = createSlice({
     namedArtistFilter: (state,{payload}) => {
       state.artistFilter = payload;
     },
+    namedLanguageFilter: (state,{payload}) => {
+      state.languageFilter = payload;
+    },
+    nullLanguageFilter: (state) => {
+      state.languageFilter = null;
+    },
+    namedalbumFilter: (state,{payload}) => {
+      state.albumFilter = payload;
+    },
+    nullalbumFilter: (state) => {
+      state.albumFilter = null;
+    },
     // removeItem: (state, action) => {
     //   const itemId = action.payload;
     //   state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
@@ -107,6 +119,6 @@ const songsSlice = createSlice({
 });
 
 // console.log(cartSlice);
-export const { namedFilter,nullFilter,nullArtistFilter,namedArtistFilter} = songsSlice.actions;
+export const { namedFilter,nullFilter,nullArtistFilter,namedArtistFilter,nullLanguageFilter,namedLanguageFilter,namedalbumFilter,nullalbumFilter} = songsSlice.actions;
 
 export default songsSlice.reducer;

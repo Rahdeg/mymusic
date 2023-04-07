@@ -5,16 +5,13 @@ import { useEffect, useState } from 'react';
 import { app } from './config/firebase';
 import { getAuth } from 'firebase/auth';
 import {AnimatePresence,motion} from 'framer-motion'
-import {useStateValue} from "./Context/stateProvider"
-import { actionType } from './Context/reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { userValidator } from './features/users/userSlices';
+import { nullUser, userValidator } from './features/users/userSlices';
 
 
 function App() {
   const [auth, setauth] = useState(false||window.localStorage.getItem('auth')==='true')
   const firebase= getAuth(app);
-  const [{user},dispatch] = useStateValue();
   const { isAudioPlaying } = useSelector((store) => store.user);
   const dispat = useDispatch(); 
   
@@ -29,10 +26,7 @@ const Navigate= useNavigate();
       }else{
         setauth(false);
         window.localStorage.setItem('auth','false');
-        dispatch({
-          type: actionType.SET_USER,
-          user:null
-        })
+        dispat(nullUser());
         Navigate('/login');
       }
     })

@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import { useStateValue } from "../Context/stateProvider";
 import {DashboardUserCard} from '../cards/cards'
-import { actionType } from "../Context/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../features/users/userSlices";
 
@@ -15,6 +13,7 @@ const DashboardUser = () => {
     if (!allUsers.length) {
      dispat(getAllUsers());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (

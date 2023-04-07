@@ -1,32 +1,25 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { MdDelete } from "react-icons/md";
+import { deleteAlbum, deleteArtist, deleteSong } from "../api/index";
+import { ref, deleteObject } from "firebase/storage";
 import {
-  deleteAlbum,
-  deleteArtist,
-  deleteSong,
-} from "../api/index";
-import {
-  ref,
-  deleteObject,
-} from "firebase/storage";
-import { useStateValue } from "../Context/stateProvider";
-import {negativeAlert,nullAlert,openPlayer,positiveAlert, setIndex} from '../features/users/userSlices'
-import { actionType } from "../Context/reducer";
+  negativeAlert,
+  nullAlert,
+  openPlayer,
+  positiveAlert,
+  setIndex,
+} from "../features/users/userSlices";
 import { storage } from "../config/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSongs } from "../features/songs/songSlice";
 import { getAllArtists } from "../features/artists/artistSlice";
 import { getAllAlbums } from "../features/album/albumSlice";
 
-const Songcard = ({ data, index, type}) => {
+const Songcard = ({ data, index, type }) => {
   const [isdelete, setisdelete] = useState(false);
-  const [{   }, dispatch] =
-    useStateValue();
-    const { allSongs} = useSelector((store) => store.songs);
-    const { allAlbums} = useSelector((store) => store.albums);
-    const { isAudioPlaying,audioIndex } = useSelector((store) => store.user);
-    const dispat = useDispatch();
+  const { isAudioPlaying, audioIndex } = useSelector((store) => store.user);
+  const dispat = useDispatch();
 
   const deleteCard = (data) => {
     if (type === "album") {
@@ -35,11 +28,12 @@ const Songcard = ({ data, index, type}) => {
       setisdelete(false);
       deleteAlbum(data._id).then((res) => {
         if (res.msg) {
-         dispat(positiveAlert());
+          dispat(positiveAlert());
           setTimeout(() => {
-           dispat(nullAlert());
+            dispat(nullAlert());
           }, 4000);
-          dispat(getAllAlbums());        } else {
+          dispat(getAllAlbums());
+        } else {
           dispat(negativeAlert());
           setTimeout(() => {
             dispat(nullAlert());
@@ -53,11 +47,11 @@ const Songcard = ({ data, index, type}) => {
       setisdelete(false);
       deleteArtist(data._id).then((res) => {
         if (res.msg) {
-         dispat(positiveAlert());
+          dispat(positiveAlert());
           setTimeout(() => {
             dispat(nullAlert());
           }, 4000);
-         dispat(getAllArtists());
+          dispat(getAllArtists());
         } else {
           dispat(negativeAlert());
           setTimeout(() => {
@@ -74,13 +68,13 @@ const Songcard = ({ data, index, type}) => {
       deleteObject(deleteRefAud).then(() => {});
       deleteSong(data._id).then((res) => {
         if (res.msg) {
-         dispat(positiveAlert());
+          dispat(positiveAlert());
           setTimeout(() => {
-           dispat(nullAlert());
+            dispat(nullAlert());
           }, 4000);
           dispat(getAllSongs());
         } else {
-         dispat(negativeAlert());
+          dispat(negativeAlert());
           setTimeout(() => {
             dispat(nullAlert());
           }, 4000);
@@ -89,20 +83,20 @@ const Songcard = ({ data, index, type}) => {
     }
   };
 
-  const addToContext =()=>{
+  const addToContext = () => {
     if (!isAudioPlaying) {
       dispat(openPlayer());
     }
     if (audioIndex !== index) {
       dispat(setIndex(index));
     }
-  }
+  };
 
   return (
     <motion.div
       key={index}
       className="relative w-40 min-w-210 px-2 cursor-pointer py-4 hover:bg-card bg-gray-100 shadow-md rounded-lg flex flex-col items-center"
-      onClick={type==="song" ? addToContext : undefined }
+      onClick={type === "song" ? addToContext : undefined}
     >
       <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
         <motion.img

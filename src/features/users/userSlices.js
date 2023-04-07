@@ -54,6 +54,12 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    nullUser: (state) => {
+      state.user = null;
+    },
+    namedUser: (state,{payload}) => {
+      state.user = payload;
+    },
     positiveAlert: (state) => {
       state.alertType = "success";
     },
@@ -129,7 +135,7 @@ const userSlice = createSlice({
 });
 
 // console.log(cartSlice);
-export const { positiveAlert,negativeAlert,nullAlert,openPlayer,closePlayer,zeroIndex,increaseIndex,decreaseIndex,setIndex} =
+export const { positiveAlert,negativeAlert,nullAlert,openPlayer,closePlayer,zeroIndex,increaseIndex,decreaseIndex,setIndex,nullUser,namedUser} =
   userSlice.actions;
 
 export default userSlice.reducer;
