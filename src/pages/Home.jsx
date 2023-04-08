@@ -20,19 +20,15 @@ const Home = () => {
     setsearchfield(event.target.value);
     }
 
-  // const songSearch=()=>{
-  //   filterSongs= allSongs.filter(song =>{
-  //     return song.artist.toLowerCase().includes('Davido'.toLowerCase());
-  //   })
-  // }
+
+  
 
   useEffect(() => {
     dispatch(getAllSongs());
     dispatch(getAllAlbums());
     dispatch(getAllArtists());
-    setsearchfield(artistFilter);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [artistFilter])
+  }, [])
 
  
 // const refresh=()=>{
@@ -43,7 +39,11 @@ const Home = () => {
  
 
  const filterSongs= allSongs.filter(song =>{
-    return song.name.toLowerCase().includes(searchfield.toLowerCase())|song.artist?.toLowerCase().includes(searchfield.toLowerCase());
+    return song.name?.toLowerCase().includes(searchfield?.toLowerCase())
+    |song.artist?.toLowerCase().includes(searchfield?.toLowerCase())
+    |song.album?.toLowerCase().includes(searchfield?.toLowerCase())
+    |song.language?.toLowerCase().includes(searchfield?.toLowerCase())
+    |song.category?.toLowerCase().includes(searchfield?.toLowerCase())
   })
 
   return (
@@ -54,20 +54,22 @@ const Home = () => {
      
       <main className=" mt-36 bg-primary flex items-center justify-center flex-col w-screen">
       <div className=" flex  justify-between flex-wrap items-center gap-5 mb-8  mt-11">
-        <Filterbottons filterdata={allArtists} flag={"Artist"} />
+        <Filterbottons filterdata={allArtists} flag={"Artist"} setsearchfield={setsearchfield} />
         {filters && filters.map((filter)=>(
            <div className="flex flex-col" key={filter.id}  >
-           <p>{filter.name}</p>
+           <p onClick={(e)=>setsearchfield(e.target.textContent)} className=" cursor-pointer">{filter.name}</p>
          </div>
         )
         )}
-        <Filterbottons filterdata={allAlbums} flag={"Album"} />
-        <Filterbottons filterdata={filterLanguage} flag={"Language"} />
+        <Filterbottons filterdata={allAlbums} flag={"Album"} setsearchfield={setsearchfield}/>
+        <Filterbottons filterdata={filterLanguage} flag={"Language"} setsearchfield={setsearchfield} />
         <HiRefresh onClick={()=>setsearchfield('')} className=" cursor-pointer"/>
       </div>
       <div className=" grid grid-cols-5 gap-14 items-center justify-evenly  mb-16 p-6">
      {
-        filterSongs && filterSongs.map((song, idx) => (
+        filterSongs ? filterSongs.map((song, idx) => (
+          <Songcard key={song._id} data={song} index={idx} type="song" />
+        )):allSongs.map((song, idx) => (
           <Songcard key={song._id} data={song} index={idx} type="song" />
         ))
      }

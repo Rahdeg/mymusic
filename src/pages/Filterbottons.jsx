@@ -9,7 +9,7 @@ import {
   namedalbumFilter,
 } from "../features/songs/songSlice";
 
-const Filterbottons = ({ filterdata, flag}) => {
+const Filterbottons = ({ filterdata, flag,setsearchfield}) => {
   const [filtername, setfiltername] = useState(null);
   const [filtermenu, setfiltermenu] = useState(false);
   const dispat = useDispatch();
@@ -17,6 +17,7 @@ const Filterbottons = ({ filterdata, flag}) => {
   const updateFilter = (name) => {
     setfiltermenu(false);
     setfiltername(name);
+    setsearchfield(name);
 
     if (flag === "Artist") {
       dispat(namedArtistFilter(name));

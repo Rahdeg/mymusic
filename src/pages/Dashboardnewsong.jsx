@@ -195,6 +195,7 @@ const Dashboardnewsong = () => {
       dispat(nullLanguageFilter());
       dispat(nullalbumFilter());
       dispat(nullFilter());
+      window.location.reload();
     }
   };
 

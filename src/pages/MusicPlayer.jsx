@@ -27,7 +27,7 @@ const MusicPlayer = () => {
   };
 
   const nextTrack = () => {
-    if (audioIndex > allSongs.length - 1) {
+    if (audioIndex === allSongs.length-1 ) {
       dispat(zeroIndex());
     } else {
       dispat(increaseIndex());
