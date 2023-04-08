@@ -58,10 +58,10 @@ const songsSlice = createSlice({
       state.filterTerm = payload;
     },
     nullFilter: (state) => {
-      state.filterTerm = null;
+      state.filterTerm = "Categories";
     },
     nullArtistFilter: (state) => {
-      state.artistFilter = null;
+      state.artistFilter = "Artist";
     },
     namedArtistFilter: (state,{payload}) => {
       state.artistFilter = payload;
@@ -70,13 +70,13 @@ const songsSlice = createSlice({
       state.languageFilter = payload;
     },
     nullLanguageFilter: (state) => {
-      state.languageFilter = null;
+      state.languageFilter = "Language";
     },
     namedalbumFilter: (state,{payload}) => {
       state.albumFilter = payload;
     },
     nullalbumFilter: (state) => {
-      state.albumFilter = null;
+      state.albumFilter = "Album";
     },
     // removeItem: (state, action) => {
     //   const itemId = action.payload;

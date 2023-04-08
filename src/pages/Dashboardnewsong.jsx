@@ -88,7 +88,7 @@ const Dashboardnewsong = () => {
       }, 4000);
       setAlbumName("");
       setisAlbumloading(false);
-      setSongAlbumCover(null);
+      setSongAlbumCover(undefined);
     }
   };
 
@@ -117,7 +117,7 @@ const Dashboardnewsong = () => {
 
       setArtistname("");
       setisArtistloading(false);
-      setSongArtistCover(null);
+      setSongArtistCover(undefined);
       setTwitter("");
       setIntagram("");
     }
@@ -133,9 +133,9 @@ const Dashboardnewsong = () => {
         dispat(nullAlert());
       }, 4000);
       deleteObject(deleteRef).then(() => {
-        setSongImageCover(null);
-        setSongArtistCover(null);
-        setSongAlbumCover(null);
+        setSongImageCover(undefined);
+        setSongArtistCover(undefined);
+        setSongAlbumCover(undefined);
         setisImageloading(false);
         setisAlbumloading(false);
       });
@@ -146,7 +146,7 @@ const Dashboardnewsong = () => {
         dispat(nullAlert());
       }, 4000);
       deleteObject(deleteRef).then(() => {
-        setSongAudioCover(null);
+        setSongAudioCover(undefined);
         setisAudioloading(false);
       });
     }
@@ -186,11 +186,11 @@ const Dashboardnewsong = () => {
       setTimeout(() => {
         dispat(nullAlert());
       }, 4000);
-      setsongname(null);
+      setsongname("type your song name....");
       setisAudioloading(false);
       setisImageloading(false);
-      setSongImageCover(null);
-      setSongAudioCover(null);
+      setSongImageCover(undefined);
+      setSongAudioCover(undefined);
       dispat(nullArtistFilter());
       dispat(nullLanguageFilter());
       dispat(nullalbumFilter());
