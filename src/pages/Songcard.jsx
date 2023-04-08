@@ -136,7 +136,7 @@ const Songcard = ({ data, index, type,env }) => {
       </p>
       {
         env === "home" && (
-          <div className=" w-full absolute bottom-2 left-40 flex items-center justify-between px-4">
+          <div className=" w-full absolute bottom-1 left-20 flex items-center justify-between px-4">
       <motion.i
         whileTap={{ scale: 0.75 }}
         className="text-base drop-shadow-md text-red-400 hover:text-red-600"
