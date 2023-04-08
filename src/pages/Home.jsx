@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterLanguage } from "../utils/supportfunctions";
 import { filters } from "../utils/supportfunctions";
 import {HiRefresh} from 'react-icons/hi'
-import { getAllSongs, nullArtistFilter, } from "../features/songs/songSlice";
+import { getAllSongs } from "../features/songs/songSlice";
 import { getAllAlbums } from "../features/album/albumSlice";
 import { getAllArtists } from "../features/artists/artistSlice";
 
@@ -12,7 +12,7 @@ const Home = () => {
  
   const { allArtists } = useSelector((store) => store.artists);
   const { allAlbums } = useSelector((store) => store.albums);
-  const { allSongs,artistFilter,languageFilter,albumFilter } = useSelector((store) => store.songs);
+  const { allSongs } = useSelector((store) => store.songs);
   const [searchfield, setsearchfield] = useState('');
   const dispatch = useDispatch();
 
