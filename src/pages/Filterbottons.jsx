@@ -9,7 +9,7 @@ import {
   namedalbumFilter,
 } from "../features/songs/songSlice";
 
-const Filterbottons = ({ filterdata, flag }) => {
+const Filterbottons = ({ filterdata, flag}) => {
   const [filtername, setfiltername] = useState(null);
   const [filtermenu, setfiltermenu] = useState(false);
   const dispat = useDispatch();

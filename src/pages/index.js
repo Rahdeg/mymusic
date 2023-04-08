@@ -12,3 +12,4 @@ export { default as Dashboardnewsong } from "./Dashboardnewsong";
 export { default as Filterbottons } from "./Filterbottons";
 export { default as Alert } from "./Alert";
 export { default as MusicPlayer } from "./MusicPlayer";
+export { default as SearchBar } from "./SearchBar";

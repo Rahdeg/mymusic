@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Logo } from "../assets/img";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isActiveStyles, isNotActiveStyles } from "../utils/styles";
@@ -11,9 +11,26 @@ import { useSelector } from "react-redux";
 const Header = () => {
   // const [isActive, setisActive] = useState(true)
   const [ismenu, setismenu] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false)
   const { user } = useSelector((store) => store.user);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = ()=>{
+     if(window.scrollY > 0){
+       setIsScrolled(true)
+     } else {
+       setIsScrolled(false)
+     }
+    }
+ 
+    window.addEventListener('scroll',handleScroll)
+    return () =>{
+     window.removeEventListener('scroll',handleScroll)
+    }
+     
+   }, [])
 
   const logout = () => {
     const firebaseauth = getAuth(app);
@@ -29,7 +46,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex items-center w-full p-4 md:py-2 md:px-6 ">
+    <header className={`fixed top-0 z-50 flex w-full items-center p-4 md:py-2 md:px-6   ${ 'bg-primary'}` }>
       <NavLink to={"/"}>
         <img src={Logo} alt="uu" className="w-16" />
       </NavLink>
