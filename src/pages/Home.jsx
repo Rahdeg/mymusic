@@ -54,23 +54,23 @@ const Home = () => {
      
       <main className=" mt-36 bg-primary flex items-center justify-center flex-col w-screen">
       <div className=" flex  justify-between flex-wrap items-center gap-5 mb-8  mt-11">
-        <Filterbottons filterdata={allArtists} flag={"Artist"} setsearchfield={setsearchfield} />
+        <Filterbottons filterdata={allArtists} flag="Artist" setsearchfield={setsearchfield} />
         {filters && filters.map((filter)=>(
            <div className="flex flex-col" key={filter.id}  >
            <p onClick={(e)=>setsearchfield(e.target.textContent)} className=" cursor-pointer">{filter.name}</p>
          </div>
         )
         )}
-        <Filterbottons filterdata={allAlbums} flag={"Album"} setsearchfield={setsearchfield}/>
-        <Filterbottons filterdata={filterLanguage} flag={"Language"} setsearchfield={setsearchfield} />
+        <Filterbottons filterdata={allAlbums} flag="Album" setsearchfield={setsearchfield}/>
+        <Filterbottons filterdata={filterLanguage} flag="Language" setsearchfield={setsearchfield} />
         <HiRefresh onClick={()=>setsearchfield('')} className=" cursor-pointer"/>
       </div>
       <div className=" grid grid-cols-5 gap-14 items-center justify-evenly  mb-16 p-6">
      {
         filterSongs ? filterSongs.map((song, idx) => (
-          <Songcard key={song._id} data={song} index={idx} type="song" />
+          <Songcard key={song._id} data={song} index={idx} type="song" env="home" />
         )):allSongs.map((song, idx) => (
-          <Songcard key={song._id} data={song} index={idx} type="song" />
+          <Songcard key={song._id} data={song} index={idx} type="song" env="home" />
         ))
      }
     </div>

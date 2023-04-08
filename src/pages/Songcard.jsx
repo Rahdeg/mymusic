@@ -17,7 +17,7 @@ import { getAllArtists } from "../features/artists/artistSlice";
 import { getAllAlbums } from "../features/album/albumSlice";
 import { AiFillPlayCircle } from "react-icons/ai";
 
-const Songcard = ({ data, index, type }) => {
+const Songcard = ({ data, index, type,env }) => {
   const [isdelete, setisdelete] = useState(false);
   const { isAudioPlaying, audioIndex } = useSelector((store) => store.user);
   const dispat = useDispatch();
@@ -134,29 +134,45 @@ const Songcard = ({ data, index, type }) => {
         )}
        
       </p>
-      
-      <div className=" w-full absolute bottom-2 right-2 flex items-center justify-between px-4">
-        <motion.i
-          whileTap={{ scale: 0.75 }}
-          className="text-base drop-shadow-md text-red-400 hover:text-red-600"
-          onClick={() => setisdelete(true)}
-        >
-          <MdDelete />
-        </motion.i>
-      </div>
       {
-        type === "song" && (
+        env === "home" && (
           <div className=" w-full absolute bottom-2 left-40 flex items-center justify-between px-4">
+      <motion.i
+        whileTap={{ scale: 0.75 }}
+        className="text-base drop-shadow-md text-red-400 hover:text-red-600"
+      >
+         <AiFillPlayCircle onClick={type === "song" ? addToContext : undefined} className=" text-2xl font-bold drop-shadow-md text-green-400 hover:text-green-600"/>
+      </motion.i>
+    </div>
+        )
+      }
+      {
+         env==="dash" && (
+          <div className=" w-full absolute bottom-2 right-2 flex items-center justify-between px-4">
           <motion.i
             whileTap={{ scale: 0.75 }}
             className="text-base drop-shadow-md text-red-400 hover:text-red-600"
+            onClick={() => setisdelete(true)}
           >
-             <AiFillPlayCircle onClick={type === "song" ? addToContext : undefined} className=" text-2xl font-bold drop-shadow-md text-green-400 hover:text-green-600"/>
+            <MdDelete />
           </motion.i>
         </div>
-         
-        )
+         )
       }
+    {
+      env==="dash" && type=== "song" && (  <div className=" w-full absolute bottom-2 left-40 flex items-center justify-between px-4">
+      <motion.i
+        whileTap={{ scale: 0.75 }}
+        className="text-base drop-shadow-md text-red-400 hover:text-red-600"
+      >
+         <AiFillPlayCircle onClick={type === "song" ? addToContext : undefined} className=" text-2xl font-bold drop-shadow-md text-green-400 hover:text-green-600"/>
+      </motion.i>
+    </div>
+    
+    )
+    }
+      
+      
       {isdelete && (
         <motion.div
           className="absolute inset-0 backdrop-blur-md bg-cardOverlay flex items-center flex-col justify-center px-4 py-2 gap-0"

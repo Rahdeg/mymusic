@@ -209,10 +209,10 @@ const Dashboardnewsong = () => {
         onChange={(e) => setsongname(e.target.value)}
       />
       <div className="w-full flex  justify-between flex-wrap items-center gap-4 ">
-        <Filterbottons filterdata={allArtists} flag={"Artist"} />
-        <Filterbottons filterdata={allAlbums} flag={"Album"} />
-        <Filterbottons filterdata={filterLanguage} flag={"Language"} />
-        <Filterbottons filterdata={filters} flag={"Category"} />
+        <Filterbottons filterdata={allArtists} flag="Artist" />
+        <Filterbottons filterdata={allAlbums} flag="Album" />
+        <Filterbottons filterdata={filterLanguage} flag="Language" />
+        <Filterbottons filterdata={filters} flag="Category" />
       </div>
       <div className=" bg-card backdrop-blur-md w-full h-300 rounded-md border-2 border-dotted border-gray-300 cursor-pointer">
         {isImageloading && <Fileloader progress={imageprogress} />}

@@ -63,7 +63,7 @@ export const Albumcontainer = ({ data }) => {
     <div className="w-full flex flex-wrap gap-3 items-center justify-evenly">
       {data &&
         data.map((album, idx) => (
-          <Songcard key={album._id} data={album} index={idx} type="album" />
+          <Songcard key={album._id} data={album} index={idx} type="album" env="dash" />
         ))}
     </div>
   );
