@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-const url = 'http://localhost:5000/';
+const url = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
   allArtists: [],
@@ -93,6 +93,6 @@ const artistsSlice = createSlice({
 });
 
 // console.log(cartSlice);
-export const { } = artistsSlice.actions;
+// export const { } = artistsSlice.actions;
 
 export default artistsSlice.reducer;
