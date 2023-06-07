@@ -35,7 +35,7 @@ const DashboardHome = () => {
   }, []);
 
   return (
-    <div className="w-full p-6 flex items-center justify-evenly flex-wrap">
+    <div className="w-full p-6 flex gap-6 items-center justify-evenly flex-wrap">
       <DashboardCard
         icon={<FaUsers className=" text-xl text-textColor" />}
         name="Users"
