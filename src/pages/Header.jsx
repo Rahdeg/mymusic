@@ -105,7 +105,7 @@ const Header = () => {
         />
         <div className="flex flex-col">
           <p className="text-textColor text-lg hover:text-headingColor font-semibold">
-            {user?.name.length > 12 ? `${user?.name.slice(0,12)}....`: user?.name}
+            {user?.name}
           </p>
           <p className="flex items-center gap-2 text-xs text-gray-500 font-normal">
             Premium Member <FaCrown className="text-sm -ml-1 text-yelow-500" />{" "}
