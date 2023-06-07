@@ -9,7 +9,7 @@ import { getAuth } from "firebase/auth";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  // const [isActive, setisActive] = useState(true)
+  const [isActive, setisActive] = useState(true)
   const [ismenu, setismenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false)
   const { user } = useSelector((store) => store.user);
