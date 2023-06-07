@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed top-0 z-50 flex w-full items-center py-2 px-24 lg:py-2 lg:px-16 xl:px-8   ${ 'bg-primary'}` }>
+    <header className={`fixed top-0 z-50 flex w-full items-center pl-5  pr-5 md:py-2 md:px-24 lg:py-2 lg:px-16 xl:px-8   ${ 'bg-primary'}` }>
       <NavLink to={"/"}>
         <img src={Logo} alt="uu" className="w-16" />
       </NavLink>

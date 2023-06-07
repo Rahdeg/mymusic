@@ -65,7 +65,7 @@ const Home = () => {
         <Filterbottons filterdata={filterLanguage} flag="Language" setsearchfield={setsearchfield} />
         <HiRefresh onClick={()=>setsearchfield('')} className=" cursor-pointer"/>
       </div>
-      <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 items-center justify-evenly  mb-16 p-6">
+      <div className=" grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-10 items-center justify-evenly  mb-16 p-3">
      {
         filterSongs ? filterSongs.map((song, idx) => (
           <Songcard key={song._id} data={song} index={idx} type="song" env="home" />
