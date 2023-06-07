@@ -46,11 +46,11 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed top-0 z-50 flex w-full items-center p-4 md:py-2 md:px-6   ${ 'bg-primary'}` }>
+    <header className={`fixed top-0 z-50 flex w-full items-center py-2 px-24 lg:py-2 lg:px-16 xl:px-8   ${ 'bg-primary'}` }>
       <NavLink to={"/"}>
         <img src={Logo} alt="uu" className="w-16" />
       </NavLink>
-      <ul className="flex items-center justify-center ml-7">
+      <ul className=" hidden lg:flex items-center justify-center ml-7">
         <li className="mx-5 text-lg">
           <NavLink
             to={"/home"}
@@ -93,7 +93,7 @@ const Header = () => {
         </li>
       </ul>
       <div
-        className="flex items-center ml-auto cursor-pointer gap-2 relative"
+        className=" flex items-center ml-auto cursor-pointer gap-2 relative"
         onMouseEnter={() => setismenu(true)}
         onMouseLeave={() => setismenu(false)}
       >
@@ -105,7 +105,7 @@ const Header = () => {
         />
         <div className="flex flex-col">
           <p className="text-textColor text-lg hover:text-headingColor font-semibold">
-            {user?.name}
+            {user?.name.length > 12 ? `${user?.name.slice(0,12)}....`: user?.name}
           </p>
           <p className="flex items-center gap-2 text-xs text-gray-500 font-normal">
             Premium Member <FaCrown className="text-sm -ml-1 text-yelow-500" />{" "}

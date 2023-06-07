@@ -52,7 +52,7 @@ const Home = () => {
       <Header />
    
      
-      <main className=" mt-36 bg-primary flex items-center justify-center flex-col w-screen">
+      <main className=" mt-36 bg-primary flex items-center justify-center flex-col w-full">
       <div className=" flex  justify-between flex-wrap items-center gap-5 mb-8  mt-11">
         <Filterbottons filterdata={allArtists} flag="Artist" setsearchfield={setsearchfield} />
         {filters && filters.map((filter)=>(
@@ -65,7 +65,7 @@ const Home = () => {
         <Filterbottons filterdata={filterLanguage} flag="Language" setsearchfield={setsearchfield} />
         <HiRefresh onClick={()=>setsearchfield('')} className=" cursor-pointer"/>
       </div>
-      <div className=" grid grid-cols-5 gap-14 items-center justify-evenly  mb-16 p-6">
+      <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 items-center justify-evenly  mb-16 p-6">
      {
         filterSongs ? filterSongs.map((song, idx) => (
           <Songcard key={song._id} data={song} index={idx} type="song" env="home" />
